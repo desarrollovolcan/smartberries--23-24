@@ -737,7 +737,7 @@ $html = $html . '
             <tr>
               <th class="color center ">Quantity Boxes</th>
               <th class="color center ">Description of goods </th>
-              <th class="color center ">Handling </th>
+              <th class="color center ">Handling  </th>
               <th class="color center ">Net Kilo </th>
               <th class="color center ">Gross Kilo </th>
               <th class="color center ">Type of currency </th>
