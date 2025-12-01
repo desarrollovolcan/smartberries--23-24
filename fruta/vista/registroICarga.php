@@ -4727,7 +4727,7 @@ if (isset($_POST)) {
                                                 </div>
                                             </div>
                                              
-                                            <!--<div class="col-xxl-2 col-xl-5 col-lg-8 col-md-8 col-sm-8 col-8 col-xs-8">
+                                            <div class="col-xxl-2 col-xl-5 col-lg-8 col-md-8 col-sm-8 col-8 col-xs-8">
                                                 <div class="form-group">
                                                     <label>BL</label>
                                                     <input type="hidden" class="form-control" placeholder="EMISIONBL" id="EMISIONBLE" name="EMISIONBLE" value="<?php echo $EMISIONBL; ?>" />
@@ -4745,7 +4745,7 @@ if (isset($_POST)) {
                                                     </select>
                                                     <label id="val_emisionbl" class="validacion"> </label>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                              <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
                                                 <div class="form-group">
                                                     <br>
