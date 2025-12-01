@@ -819,7 +819,10 @@ $html = $html . '
           <div class="address"><b>Invoice Note</b></div>
           <div class="address">  ' . $OBSERVACIONESI . ' </div>
         </div>
-        
+        <div id="client">
+          <div class="address"><b>Glosa EU</b></div>
+          <div class="address"> The exporter of the products covered by this document (77.223.122-9) declares that, except where otherwise clearly indicated, these products are of CHILE preferential origin Product Description: Fresh Blueberries 0810.40 </div>
+        </div>
       </div>
 
     </main>
