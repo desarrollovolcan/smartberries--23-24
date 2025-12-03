@@ -234,7 +234,7 @@ if ($EMPRESAS  && $TEMPORADAS) {
 
         .detalle-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
             /* gap: 10px; */
             gap: 6px;
             align-items: stretch;
@@ -393,6 +393,25 @@ if ($EMPRESAS  && $TEMPORADAS) {
             text-decoration: underline;
             font-weight: 700;
         }
+        
+        /* Ancho y centrado del modal */
+        .detalle-modal .modal-dialog {
+            max-width: 1100px;          
+            width: calc(100% - 40px);   
+            margin: 1.75rem auto;
+        }
+
+        @media (max-width: 992px) {
+            .detalle-modal .modal-dialog {
+                max-width: 95vw;
+                margin: 10px auto;
+            }
+
+            .detalle-grid {
+                grid-template-columns: 1fr; /* en pantallas chicas, 1 columna */
+            }
+        }
+
     </style>
         <!- FUNCIONES BASES -!>
             <script type="text/javascript">
