@@ -235,11 +235,11 @@ if ($EMPRESAS  && $TEMPORADAS) {
         }
 
         .detalle-grid {
-            display: grid;
-            /* grid-template-columns: repeat(auto-fit, minmax(320px, 2fr)); */
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            /* gap: 10px; */
-            gap: 6px;
+            
+            grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
+            
+            gap: 10px;
+            
             align-items: stretch;
             grid-auto-rows: 1fr;
         }
