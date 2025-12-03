@@ -406,7 +406,44 @@ if ($EMPRESAS  && $TEMPORADAS) {
             text-decoration: underline;
             font-weight: 700;
         }
-        
+        .detalle-encabezado-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: #f3f6fb;
+    border-bottom: 1px solid #e1e6ef;
+    padding: 14px 18px;
+    gap: 8px;
+}
+
+.detalle-encabezado-grid .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detalle-encabezado-grid .label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #58718a;
+    margin-bottom: 6px;
+}
+
+.detalle-encabezado-grid .value {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f2d4a;
+}
+.badge-estado {
+    display: inline-block;
+    background: #e4eef9;
+    color: #123e74;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1px solid #c5d7e8;
+}
        
     </style>
         <!- FUNCIONES BASES -!>
@@ -1159,25 +1196,25 @@ if ($EMPRESAS  && $TEMPORADAS) {
                             </div>
                         <?php endif; ?>
                         <div class="detalle-resumen-table">
-                            <table class="detalle-table resumen-table">
-                                <thead class="header-table-modal">
-                                    <tr>
-                                        <th>Folio original</th>
-                                        <th>Folio nuevo</th>
-                                        <th>Estado</th>
-                                        <th>Condición</th>
-                                        <th>Calidad</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="header-table-modal">
-                                    <tr>
-                                        <td data-detail="folio"></td>
-                                        <td data-detail="folio-aux"></td>
-                                        <td><span class="detalle-badge" data-detail="estado"></span></td>
-                                        <td><span class="detalle-badge" data-detail="condicion"></span></td>
-                                        <td><span class="detalle-badge detalle-estado-calidad" data-detail="estado-calidad"></span></td>
-                                    </tr>
-                                </tbody>
+                           <div class="detalle-encabezado-grid">
+                                <div class="item">
+                                    <span class="label">Folio original</span>
+                                    <span class="value" data-detail="folio"></span>
+                                </div>
+                                <div class="item">
+                                    <span class="label">Folio nuevo</span>
+                                    <span class="value" data-detail="folio-aux"></span>
+                                </div>
+                                <div class="item">
+                                    <span class="label">Estado</span>
+                                    <span class="badge-estado" data-detail="estado"></span>
+                                </div>
+                                <div class="item">
+                                    <span class="label">Calidad</span>
+                                    <span class="badge-estado" data-detail="estado-calidad"></span>
+                                </div>
+                            </div>
+
                             </table>
                         </div>
                         <div class="detalle-grid mb-1">
