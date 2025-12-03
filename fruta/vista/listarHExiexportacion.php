@@ -235,7 +235,7 @@ if ($EMPRESAS  && $TEMPORADAS) {
         }
 
         .detalle-grid {
-            
+            display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
             
             gap: 10px;
