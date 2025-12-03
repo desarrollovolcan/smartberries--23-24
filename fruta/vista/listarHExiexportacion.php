@@ -255,7 +255,9 @@ if ($EMPRESAS  && $TEMPORADAS) {
            
             align-items: center;
         }
-
+        .header-table-modal{
+            display: flex;
+        }
         .detalle-resumen-table thead th {
             /* background: #0c3972; */
             background: #f2f6fb;
@@ -1158,7 +1160,7 @@ if ($EMPRESAS  && $TEMPORADAS) {
                         <?php endif; ?>
                         <div class="detalle-resumen-table">
                             <table class="detalle-table resumen-table">
-                                <thead>
+                                <thead class="header-table-modal">
                                     <tr>
                                         <th>Folio original</th>
                                         <th>Folio nuevo</th>
@@ -1167,7 +1169,7 @@ if ($EMPRESAS  && $TEMPORADAS) {
                                         <th>Calidad</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="header-table-modal">
                                     <tr>
                                         <td data-detail="folio"></td>
                                         <td data-detail="folio-aux"></td>
