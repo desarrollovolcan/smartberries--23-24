@@ -714,7 +714,8 @@ $html='
        <tbody>   
         <tr>                       
           <th class="color2 left">Lugar Carga: </th> 
-          <td class="color2 left">'.$NOMBREORIGEN.'</td>     
+          <td class="color2 left">'.$NOMBREORIGEN.'</td>  
+             
           <th class="color2 left">FDA Packing: </th> 
           <td class="color2 left">'.$FDADESPACHOEX.'</td>      
         </tr>        
