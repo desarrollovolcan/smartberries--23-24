@@ -168,7 +168,7 @@ if ($EMPRESAS  && $TEMPORADAS) {
     <style>
         .detalle-modal .modal-content {
             border: 1px solid #c7d6eb;
-            box-shadow: 0 12px 30px rgba(5, 43, 92, 0.15);
+            box-shadow: 0 8px 22px rgba(0, 54, 94, 0.08);
             border-radius: 12px;
             overflow: hidden;
         }
@@ -180,7 +180,7 @@ if ($EMPRESAS  && $TEMPORADAS) {
             color: #0f4a7a;
             border-bottom: 1px solid #d0d7e3;
             /* border: none; */
-            padding: 14px 18px;
+            padding: 10px 12px;
         }
 
         .detalle-modal .modal-title {
@@ -194,13 +194,15 @@ if ($EMPRESAS  && $TEMPORADAS) {
         .detalle-modal .modal-subtitle {
             font-size: 11px;
             letter-spacing: 0.5px;
-            color: #d6e4f9;
+            /* color: #d6e4f9; */
+            color: #5a6f86;
             margin-bottom: 2px;
             opacity: 0.95;
         }
 
         .detalle-modal .close {
-            color: #f2f6fb;
+            /* color: #f2f6fb; */
+            color: #0f4a7a;
             opacity: 1;
             font-weight: 800;
         }
@@ -233,13 +235,15 @@ if ($EMPRESAS  && $TEMPORADAS) {
         .detalle-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 10px;
+            /* gap: 10px; */
+            gap: 6px;
             align-items: stretch;
             grid-auto-rows: 1fr;
         }
 
         .detalle-resumen-table {
-            margin-bottom: 10px;
+            /* margin-bottom: 10px; */
+            margin-bottom: 8px;
         }
 
         .detalle-resumen-table .detalle-table {
@@ -247,8 +251,9 @@ if ($EMPRESAS  && $TEMPORADAS) {
         }
 
         .detalle-resumen-table thead th {
-            background: #0c3972;
-            color: #f2f6fb;
+            /* background: #0c3972; */
+            background: #f2f6fb;
+            /* color: #f2f6fb; */
             text-transform: uppercase;
             font-size: 11px;
             letter-spacing: 0.4px;
@@ -258,7 +263,7 @@ if ($EMPRESAS  && $TEMPORADAS) {
         .detalle-resumen-table tbody td {
             font-size: 14px;
             font-weight: 800;
-            background: #f9fbff;
+            /* background: #f9fbff; */
         }
 
         .detalle-card {
@@ -266,7 +271,8 @@ if ($EMPRESAS  && $TEMPORADAS) {
             border: 1px solid #d3deef;
             border-radius: 10px;
             padding: 0;
-            box-shadow: 0 10px 18px rgba(12, 57, 114, 0.08);
+            /* box-shadow: 0 10px 18px rgba(12, 57, 114, 0.08); */
+            box-shadow: 0 1px 4px rgba(15, 62, 91, 0.05);
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -274,12 +280,17 @@ if ($EMPRESAS  && $TEMPORADAS) {
 
         .detalle-card h5 {
             font-size: 12px;
-            font-weight: 700;
+            /* font-weight: 700; */
+            font-weight: 600;
             color: #0c3972;
             margin: 0;
+            display: flex; /* cambio */
+            align-items: center; /* cambio */
+            gap: 8px; /* cambio */
+            text-transform: uppercase;/* cambio */
             letter-spacing: 0.3px;
             padding: 10px 12px;
-            background: linear-gradient(90deg, #eef3fb 0%, #dfe9f7 100%);
+            /* background: linear-gradient(90deg, #eef3fb 0%, #dfe9f7 100%); */
             border-bottom: 1px solid #d6e1f3;
         }
 
@@ -301,14 +312,26 @@ if ($EMPRESAS  && $TEMPORADAS) {
         }
 
         .detalle-card th {
-            background: #fafbfc;
+            /* background: #fafbfc;
             color: #4d637d;
             width: 42%;
-            font-weight: 700;
+            font-weight: 700; */
+            width: 46%;
+            padding: 6px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #304a6b;
+            background: #f5f7fb;
+            border-bottom: 1px solid #e7ecf4;
         }
 
         .detalle-card td {
-            font-weight: 700;
+            /* font-weight: 700; */
+            padding: 6px 8px;
+            font-size: 12.5px;
+            color: #0f2d4a;
+            border-bottom: 1px solid #eef2f7;
+            word-break: break-word;
         }
 
         .detalle-table.resumen-table th,
@@ -317,7 +340,7 @@ if ($EMPRESAS  && $TEMPORADAS) {
         }
 
         .detalle-badge {
-            display: inline-flex;
+            /* display: inline-flex;
             align-items: center;
             justify-content: center;
             min-width: 90px;
@@ -326,7 +349,16 @@ if ($EMPRESAS  && $TEMPORADAS) {
             background: #d8e8ff;
             color: #0b2f57;
             font-weight: 800;
-            border: 1px solid #b7c9e6;
+            border: 1px solid #b7c9e6; */
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            background: #e7f0fb;
+            color: #0f4a7a;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 12px;
+            border: 1px solid #c7d6ea;
         }
 
         .detalle-modal .modal-footer {
