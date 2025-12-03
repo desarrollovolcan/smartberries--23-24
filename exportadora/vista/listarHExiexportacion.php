@@ -165,7 +165,7 @@ if ($EMPRESAS  && $TEMPORADAS) {
                                     </nav>
                                 </div>
                             </div>
-                            <?php include_once "../../assest/config/verIndicadorEconomico.php"; ?>
+                            <?php include_once "../../assest/config/verIndicadorEconomico.php"; ?> 
                         </div>
                     </div>
                     <!-- Main content -->
