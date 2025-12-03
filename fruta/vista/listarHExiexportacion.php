@@ -251,6 +251,9 @@ if ($EMPRESAS  && $TEMPORADAS) {
 
         .detalle-resumen-table .detalle-table {
             table-layout: fixed;
+            display: flex;
+            justify-content: space-between;  /* o space-around / space-evenly */
+            align-items: center;
         }
 
         .detalle-resumen-table thead th {
@@ -287,8 +290,9 @@ if ($EMPRESAS  && $TEMPORADAS) {
             font-size: 12px;
             /* font-weight: 700; */
             font-weight: 600;
-            color: #0c3972;
+            color: #0f2d4a;
             margin: 0;
+            letter-spacing: 0.3px; /* cambio */
             display: flex; /* cambio */
             align-items: center; /* cambio */
             gap: 8px; /* cambio */
