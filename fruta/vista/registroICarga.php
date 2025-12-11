@@ -5831,7 +5831,7 @@ if (isset($_POST)) {
             //OPERACIONES
             $PAIS_DESTINO_FORM = $_REQUEST['PAIS']
                 ?? ($_REQUEST['PAIS_EMBARQUE'] ?? ($_REQUEST['PAIS_PUERTO'] ?? ($_REQUEST['PAISE'] ?? $PAIS ?? null)));
-            $PAIS_DESTINO_FINAL_FORM = $_REQUEST['PAIS_FINAL'] ?? ($PAIS_FINAL ?? null);
+            $PAIS_DESTINO_FINAL_FORM = $_REQUEST['PAIS_FINAL'] ?? null;
             if ($PAIS_DESTINO_FINAL_FORM === '') {
                 $PAIS_DESTINO_FINAL_FORM = null;
             }
