@@ -229,6 +229,7 @@ $ARRAYGROSSKILO = [];
 $ARRAYNETKILO = [];
 $ARRAYENVASEAGRUPADO = [];
 $ARRAYPRECIOPORCALIBRE = [];
+$ARRAYPRECIOPORCALIBRESOLO = [];
 $ARRAYCALIBRE = "";
 $ARRAYNUMERO = "";
 $ARRAYVERNOTADCNC="";
@@ -354,18 +355,16 @@ if($ARRAYICARGA){
         'TMONEDA' => $s['TMONEDA'],
         'US' => normalizeNumber($s['US']),
       ];
+      $ARRAYPRECIOPORCALIBRESOLO[$s['TCALIBRE']] = [
+        'TMONEDA' => $s['TMONEDA'],
+        'US' => normalizeNumber($s['US']),
+      ];
     }
     }
 
 
     $ARRAYCLAVESDETALLE = array_unique(array_merge(array_keys($ARRAYENVASEAGRUPADO), array_keys($ARRAYDCARGAAGRUPADO)));
     foreach($ARRAYCLAVESDETALLE as $keyDetalle) {
-      $ENVASEAGRUPADO = normalizeNumber($ARRAYENVASEAGRUPADO[$keyDetalle] ?? ($ARRAYDCARGAAGRUPADO[$keyDetalle]['ENVASESF'] ?? 0));
-      $NETOAGRUPADO = normalizeNumber($ARRAYNETKILO[$keyDetalle] ?? ($ARRAYDCARGAAGRUPADO[$keyDetalle]['NETOSF'] ?? 0));
-      $BRUTOAGRUPADO = normalizeNumber($ARRAYGROSSKILO[$keyDetalle] ?? ($ARRAYDCARGAAGRUPADO[$keyDetalle]['BRUTOSF'] ?? 0));
-      $PRECIOAGRUPADO = normalizeNumber($ARRAYDCARGAAGRUPADO[$keyDetalle]['US'] ?? ($ARRAYPRECIOPORCALIBRE[$keyDetalle]['US'] ?? 0));
-      $MONEDAAGRUPADA = $ARRAYDCARGAAGRUPADO[$keyDetalle]['TMONEDA'] ?? ($ARRAYPRECIOPORCALIBRE[$keyDetalle]['TMONEDA'] ?? "");
-
       $NOMBREDETALLE = '';
       $CALIBREDETALLE = '';
       if(strpos($keyDetalle, '|') !== false){
@@ -373,6 +372,19 @@ if($ARRAYICARGA){
         $NOMBREDETALLE = $DETALLEDATA[0];
         $CALIBREDETALLE = $DETALLEDATA[1] ?? '';
       }
+
+      $ENVASEAGRUPADO = normalizeNumber($ARRAYENVASEAGRUPADO[$keyDetalle] ?? ($ARRAYDCARGAAGRUPADO[$keyDetalle]['ENVASESF'] ?? 0));
+      $NETOAGRUPADO = normalizeNumber($ARRAYNETKILO[$keyDetalle] ?? ($ARRAYDCARGAAGRUPADO[$keyDetalle]['NETOSF'] ?? 0));
+      $BRUTOAGRUPADO = normalizeNumber($ARRAYGROSSKILO[$keyDetalle] ?? ($ARRAYDCARGAAGRUPADO[$keyDetalle]['BRUTOSF'] ?? 0));
+
+      $PRECIOAGRUPADO = normalizeNumber(
+        $ARRAYDCARGAAGRUPADO[$keyDetalle]['US']
+          ?? ($ARRAYPRECIOPORCALIBRE[$keyDetalle]['US'] ?? null)
+          ?? ($ARRAYPRECIOPORCALIBRESOLO[$CALIBREDETALLE]['US'] ?? 0)
+      );
+      $MONEDAAGRUPADA = $ARRAYDCARGAAGRUPADO[$keyDetalle]['TMONEDA']
+        ?? ($ARRAYPRECIOPORCALIBRE[$keyDetalle]['TMONEDA'] ?? null)
+        ?? ($ARRAYPRECIOPORCALIBRESOLO[$CALIBREDETALLE]['TMONEDA'] ?? "");
 
       $ARRAYDETALLEAGRUPADO[$keyDetalle] = [
         'NOMBRE' => $NOMBREDETALLE ?: ($ARRAYDCARGAAGRUPADO[$keyDetalle]['NOMBRE'] ?? ''),
