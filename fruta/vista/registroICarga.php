@@ -327,47 +327,67 @@ $ARRAYNUMERO = "";
 
 //DEFINIR ARREGLOS CON LOS DATOS OBTENIDOS DE LAS FUNCIONES DE LOS CONTROLADORES
 
-$ARRAYTSERVICIO = $TSERVICIO_ADO->listarTservicioPorEmpresaCBX($EMPRESAS);
-$ARRAYMERCADO = $MERCADO_ADO->listarMercadoPorEmpresaCBX($EMPRESAS);
+// Filtra los listados por temporada cuando el registro entregue dicha información
+function filtrarPorTemporada($listado, $temporada)
+{
+    if (!$listado) {
+        return $listado;
+    }
 
-$ARRAYEXPORTADORA = $EXPORTADORA_ADO->listarExportadoraCBX();
-$ARRAYCONSIGNATARIO = $CONSIGNATARIO_ADO->listarConsignatorioPorEmpresaCBX($EMPRESAS);
+    return array_values(array_filter($listado, function ($fila) use ($temporada) {
+        if (isset($fila['ESTADO_REGISTRO']) && $fila['ESTADO_REGISTRO'] != 1) {
+            return false;
+        }
 
-$ARRAYNOTIFICADOR = $NOTIFICADOR_ADO->listarNotificadorPorEmpresaCBX($EMPRESAS);
-$ARRAYBROKER = $BROKER_ADO->listarBrokerPorEmpresaCBX($EMPRESAS);
-$ARRAYRFINAL = $RFINAL_ADO->listarRfinalPorEmpresaCBX($EMPRESAS);
+        if (isset($fila['ESTADO']) && $fila['ESTADO'] != 1) {
+            return false;
+        }
 
-$ARRAYAADUANA = $AADUANA_ADO->listarAaduanaPorEmpresaCBX($EMPRESAS);
-$ARRAYAGCARGA = $AGCARGA_ADO->listarAgcargaPorEmpresaCBX($EMPRESAS);
-$ARRAYDFINAL = $DFINAL_ADO->listarDfinalPorEmpresaCBX($EMPRESAS);
+        return !$temporada || !isset($fila['ID_TEMPORADA']) || $fila['ID_TEMPORADA'] == $temporada;
+    }));
+}
 
-$ARRAYTRANSPORTE = $TRANSPORTE_ADO->listarTransportePorEmpresaCBX($EMPRESAS);
-$ARRAYLCARGA = $LCARGA_ADO->listarLcargaPorEmpresaCBX($EMPRESAS);
-$ARRAYLDESTINO = $LDESTINO_ADO->listarLdestinoPorEmpresaCBX($EMPRESAS);
+$ARRAYTSERVICIO = filtrarPorTemporada($TSERVICIO_ADO->listarTservicioPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYMERCADO = filtrarPorTemporada($MERCADO_ADO->listarMercadoPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
 
-$ARRAYLAEREA = $LAEREA_ADO->listarLaereaPorEmpresaCBX($EMPRESAS);
-$ARRAYACARGA = $ACARGA_ADO->listarAcargaPorEmpresaCBX($EMPRESAS);
-$ARRAYADESTINO = $ADESTINO_ADO->listarAdestinoPorEmpresaCBX($EMPRESAS);
+$ARRAYEXPORTADORA = filtrarPorTemporada($EXPORTADORA_ADO->listarExportadoraCBX(), $TEMPORADAS);
+$ARRAYCONSIGNATARIO = filtrarPorTemporada($CONSIGNATARIO_ADO->listarConsignatorioPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
 
-$ARRAYNAVIERA = $NAVIERA_ADO->listarNavierPorEmpresaCBX($EMPRESAS);
-$ARRAYPCARGA = $PCARGA_ADO->listarPcargaPorEmpresaCBX($EMPRESAS);
-$ARRAYPDESTINO = $PDESTINO_ADO->listarPdestinoPorEmpresaCBX($EMPRESAS);
+$ARRAYNOTIFICADOR = filtrarPorTemporada($NOTIFICADOR_ADO->listarNotificadorPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYBROKER = filtrarPorTemporada($BROKER_ADO->listarBrokerPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYRFINAL = filtrarPorTemporada($RFINAL_ADO->listarRfinalPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
 
-$ARRAYFPAGO = $FPAGO_ADO->listarFpagoPorEmpresaCBX($EMPRESAS);
-$ARRAYMVENTA = $MVENTA_ADO->listarMventaPorEmpresaCBX($EMPRESAS);
-$ARRAYCVENTA = $CVENTA_ADO->listarCventaPorEmpresaCBX($EMPRESAS);;
-$ARRAYTFLETE = $TFLETE_ADO->listarTfletePorEmpresaCBX($EMPRESAS);
+$ARRAYAADUANA = filtrarPorTemporada($AADUANA_ADO->listarAaduanaPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYAGCARGA = filtrarPorTemporada($AGCARGA_ADO->listarAgcargaPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYDFINAL = filtrarPorTemporada($DFINAL_ADO->listarDfinalPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
 
-$ARRAYTCONTENEDOR = $TCONTENEDOR_ADO->listarTcontenedorPorEmpresaCBX($EMPRESAS);
-$ARRAYATMOSFERA = $ATMOSFERA_ADO->listarAtmosferaPorEmpresaCBX($EMPRESAS);
-$ARRAYEMISIONBL = $EMISIONBL_ADO->listarEmisionblCBX();
-$ARRAYSEGURO = $SEGURO_ADO->listarSeguroPorEmpressCBX($EMPRESAS);
+$ARRAYTRANSPORTE = filtrarPorTemporada($TRANSPORTE_ADO->listarTransportePorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYLCARGA = filtrarPorTemporada($LCARGA_ADO->listarLcargaPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYLDESTINO = filtrarPorTemporada($LDESTINO_ADO->listarLdestinoPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
 
-$ARRAYESPECIES = $ESPECIES_ADO->listarEspeciesCBX();
-$ARRAYCALIBRE = $TCALIBRE_ADO->listarCalibrePorEmpresaCBX($EMPRESAS);
-$ARRAYPAIS = $PAIS_ADO->listarPaisCBX();
+$ARRAYLAEREA = filtrarPorTemporada($LAEREA_ADO->listarLaereaPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYACARGA = filtrarPorTemporada($ACARGA_ADO->listarAcargaPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYADESTINO = filtrarPorTemporada($ADESTINO_ADO->listarAdestinoPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
 
-$ARRAYESTANDAR = $EEXPORTACION_ADO->listarEstandarPorEmpresaCBX($EMPRESAS);
+$ARRAYNAVIERA = filtrarPorTemporada($NAVIERA_ADO->listarNavierPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYPCARGA = filtrarPorTemporada($PCARGA_ADO->listarPcargaPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYPDESTINO = filtrarPorTemporada($PDESTINO_ADO->listarPdestinoPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+
+$ARRAYFPAGO = filtrarPorTemporada($FPAGO_ADO->listarFpagoPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYMVENTA = filtrarPorTemporada($MVENTA_ADO->listarMventaPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYCVENTA = filtrarPorTemporada($CVENTA_ADO->listarCventaPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYTFLETE = filtrarPorTemporada($TFLETE_ADO->listarTfletePorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+
+$ARRAYTCONTENEDOR = filtrarPorTemporada($TCONTENEDOR_ADO->listarTcontenedorPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYATMOSFERA = filtrarPorTemporada($ATMOSFERA_ADO->listarAtmosferaPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYEMISIONBL = filtrarPorTemporada($EMISIONBL_ADO->listarEmisionblCBX(), $TEMPORADAS);
+$ARRAYSEGURO = filtrarPorTemporada($SEGURO_ADO->listarSeguroPorEmpressCBX($EMPRESAS), $TEMPORADAS);
+
+$ARRAYESPECIES = filtrarPorTemporada($ESPECIES_ADO->listarEspeciesCBX(), $TEMPORADAS);
+$ARRAYCALIBRE = filtrarPorTemporada($TCALIBRE_ADO->listarCalibrePorEmpresaCBX($EMPRESAS), $TEMPORADAS);
+$ARRAYPAIS = filtrarPorTemporada($PAIS_ADO->listarPaisCBX(), $TEMPORADAS);
+
+$ARRAYESTANDAR = filtrarPorTemporada($EEXPORTACION_ADO->listarEstandarPorEmpresaCBX($EMPRESAS), $TEMPORADAS);
 
 $ARRAYVERPLANTA = $PLANTA_ADO->verPlanta($PLANTAS);
 if ($ARRAYVERPLANTA) {
@@ -6112,6 +6132,9 @@ if (isset($_POST)) {
                 $ICARGA->__SET('ID_TFLETE', $_REQUEST['TFLETE'] ?? null);
                 $ICARGA->__SET('ID_SEGURO', $_REQUEST['SEGURO'] ?? null);
                 $ICARGA->__SET('ID_PAIS', $PAIS_DESTINO_FORM);
+                $ICARGA->__SET('ID_EMPRESA',  $_REQUEST['EMPRESA'] ?? null);
+                $ICARGA->__SET('ID_PLANTA',  $_REQUEST['PLANTA'] ?? null);
+                $ICARGA->__SET('ID_TEMPORADA',  $_REQUEST['TEMPORADA'] ?? null);
                 $ICARGA->__SET('ID_USUARIOM', $IDUSUARIOS);
                 $ICARGA->__SET('ID_ICARGA', $_REQUEST['IDP'] ?? null);
                 //LLAMADA AL METODO DE EDITAR DEL CONTROLADOR
