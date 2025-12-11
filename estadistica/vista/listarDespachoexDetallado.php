@@ -312,6 +312,10 @@ foreach ($ARRAYDESPACHOEX as $despacho) {
         $recepcionMPOrigen = $recepcionProceso ?: $recepcionReembalaje;
         $recepcionMPPlanta = $recepcionMPOrigen ? $recepcionMPOrigen[0]['PLANTA'] : "Sin Datos";
 
+        $TOTALBRUTO += floatval($detalle['BRUTO']);
+        $TOTALNETO += floatval($detalle['NETO']);
+        $TOTALENVASE += floatval($detalle['ENVASE']);
+
         $DETALLESDESPACHO[] = [
             'NUMEROREFERENCIA' => $icargaInfo['NREFERENCIA'],
             'BROKER' => $icargaInfo['BROKER'],
@@ -553,7 +557,16 @@ foreach ($ARRAYDESPACHOEX as $despacho) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($DETALLESDESPACHO as $item) : ?>
+                                                <?php if (!$EMPRESABUSCAR) : ?>
+                                                    <tr class="text-center">
+                                                        <td colspan="69">Seleccione la empresa para cargar la información.</td>
+                                                    </tr>
+                                                <?php elseif (!$DETALLESDESPACHO) : ?>
+                                                    <tr class="text-center">
+                                                        <td colspan="69">No se encontraron datos para la empresa seleccionada.</td>
+                                                    </tr>
+                                                <?php else : ?>
+                                                    <?php foreach ($DETALLESDESPACHO as $item) : ?>
                                                     <tr class="text-center">
                                                         <td><?php echo $item['NUMEROREFERENCIA']; ?></td>
                                                         <td><?php echo $item['BROKER']; ?></td>
@@ -627,7 +640,8 @@ foreach ($ARRAYDESPACHOEX as $despacho) {
                                                         <td><?php echo $item['TERMOGRAFODESPACHOEX']; ?></td>
                                                         <td><?php echo $item['TERMOGRAFOPALLET']; ?></td>
                                                     </tr>
-                                                <?php endforeach; ?>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -638,31 +652,34 @@ foreach ($ARRAYDESPACHOEX as $despacho) {
                                     <div class="form-row align-items-center" role="group" aria-label="Datos">
                                         <div class="col-auto">
                                             <div class="input-group mb-2">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text">Total Envase</div>
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Total Envase</div>
                                                     <button class="btn btn-default" id="TOTALENVASEV" name="TOTALENVASEV">
+                                                        <?php echo number_format($TOTALENVASE, 0, ',', '.'); ?>
                                                     </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="input-group mb-2">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text">Total Neto</div>
+                                            <div class="col-auto">
+                                                <div class="input-group mb-2">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Total Neto</div>
                                                     <button class="btn btn-default" id="TOTALNETOV" name="TOTALNETOV">
+                                                        <?php echo number_format($TOTALNETO, 0, ',', '.'); ?>
                                                     </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="input-group mb-2">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text">Total Bruto</div>
+                                            <div class="col-auto">
+                                                <div class="input-group mb-2">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Total Bruto</div>
                                                     <button class="btn btn-default" id="TOTALBRUTOV" name="TOTALBRUTOV">
+                                                        <?php echo number_format($TOTALBRUTO, 0, ',', '.'); ?>
                                                     </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>  
