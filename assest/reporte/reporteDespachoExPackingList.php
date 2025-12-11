@@ -602,6 +602,7 @@ $html = '
         <th class="color center ">Calibres </th>
         <th class="color center ">Envases </th>
         <th class="color center ">Kilos Neto </th>
+        <th class="color center ">Kilos Bruto </th>
         <th class="color center ">N° InsFinal </th>
         <th class="color center ">Nombre Exportadora </th>
         <th class="color center ">Recibiddor</th>
@@ -688,9 +689,11 @@ foreach ($ARRAYTOMADO as $r) :
     if ($ARRAYEVERERECEPCIONID) {
         $CODIGOESTANDAR = $ARRAYEVERERECEPCIONID[0]['CODIGO_ESTANDAR'];
         $NOMBREESTANDAR = $ARRAYEVERERECEPCIONID[0]['NOMBRE_ESTANDAR'];
+        $PESO_BRUTO_ESTANDAR = $ARRAYEVERERECEPCIONID[0]['PESO_BRUTO_ESTANDAR'];
     } else {
         $NOMBREESTANDAR = "Sin Datos";
         $CODIGOESTANDAR = "Sin Datos";
+        $PESO_BRUTO_ESTANDAR = 0;
     }
 
 
@@ -702,15 +705,15 @@ foreach ($ARRAYTOMADO as $r) :
     }
 
 
-    $ArrayTermografoPallet =$EXIEXPORTACION_ADO->verFolio($r['FOLIO_AUXILIAR_EXIEXPORTACION']);  
+    $ArrayTermografoPallet =$EXIEXPORTACION_ADO->verFolio($r['FOLIO_AUXILIAR_EXIEXPORTACION']);
               if($ArrayTermografoPallet){
                 $termografoPallet=$ArrayTermografoPallet[0]["N_TERMOGRAFO"];
               }else{
                 $termografoPallet="Sin Datos";
               }
-  
-$html = $html . '    
-            <tr class="center">        
+
+$html = $html . '
+            <tr class="center">
                 <td class=" center">' . $r['FOLIO_AUXILIAR_EXIEXPORTACION'] . '</td>
                 <td class=" center">' . $r['EMBALADO'] . '</td>
                 <td class=" center ">' . $NOMBREESTANDAR . ' </td>
@@ -721,9 +724,10 @@ $html = $html . '
                 <td class=" center ">' . $NOMBRETCALIBRE . ' </td>
                 <td class=" center">' . $r['ENVASE'] . '</td>
                 <td class=" center">' . $r['NETO'] . '</td>
+                <td class=" center">' . $r['BRUTO'] . '</td>
                 <td class=" center ">' . $NUMEROIREFERENCIA . ' </td>
                 <td class=" center ">' . $NOMBREEXPPORTADORA . ' </td>
-                <td class=" center ">' . $NOMBRERFINAL . ' </td>  
+                <td class=" center ">' . $NOMBRERFINAL . ' </td>
 
                 ';
 
