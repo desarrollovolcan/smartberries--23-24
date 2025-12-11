@@ -334,10 +334,10 @@ if($ARRAYICARGA){
 
     if($ARRAYDCARGA){
     foreach ($ARRAYDCARGA as $s) {
-      $KEYCALIBRE = $s['TCALIBRE'];
+      $KEYDETALLE = $s['TCALIBRE'].'|'.($s['TMANEJO'] ?? '');
       $IDTCALIBRE = $s['ID_TCALIBRE'] ?? null;
-      if(!isset($ARRAYDCARGAAGRUPADO[$KEYCALIBRE])){
-      $ARRAYDCARGAAGRUPADO[$KEYCALIBRE] = [
+      if(!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE])){
+      $ARRAYDCARGAAGRUPADO[$KEYDETALLE] = [
         'NOMBRE' => $s['NOMBRE'],
         'TCALIBRE' => $s['TCALIBRE'],
         'ID_TCALIBRE' => $IDTCALIBRE,
@@ -351,11 +351,11 @@ if($ARRAYICARGA){
         'TOTALUSSF' => 0,
       ];
       }
-      $ARRAYDCARGAAGRUPADO[$KEYCALIBRE]['ENVASESF'] += $s['ENVASESF'];
-      $ARRAYDCARGAAGRUPADO[$KEYCALIBRE]['NETOSF'] += $s['NETOSF'];
-      $ARRAYDCARGAAGRUPADO[$KEYCALIBRE]['BRUTOSF'] += $s['BRUTOSF'];
-      $ARRAYDCARGAAGRUPADO[$KEYCALIBRE]['TOTALUSSF'] += $s['TOTALUSSF'];
-      $ARRAYPRECIOPORCALIBRE[$KEYCALIBRE] = [
+      $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['ENVASESF'] += $s['ENVASESF'];
+      $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['NETOSF'] += $s['NETOSF'];
+      $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['BRUTOSF'] += $s['BRUTOSF'];
+      $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TOTALUSSF'] += $s['TOTALUSSF'];
+      $ARRAYPRECIOPORCALIBRE[$KEYDETALLE] = [
         'ID_TCALIBRE' => $IDTCALIBRE,
         'TMONEDA' => $s['TMONEDA'],
         'US' => normalizeNumber($s['US']),
@@ -374,17 +374,17 @@ if($ARRAYICARGA){
     }
 
 
-    $ARRAYCLAVESDETALLE = array_unique(array_merge(array_keys($ARRAYENVASEAGRUPADO), array_keys($ARRAYDCARGAAGRUPADO)));
-    foreach($ARRAYCLAVESDETALLE as $keyDetalle) {
+      $ARRAYCLAVESDETALLE = array_keys($ARRAYDCARGAAGRUPADO);
+      foreach($ARRAYCLAVESDETALLE as $keyDetalle) {
       $NOMBREDETALLE = '';
       $CALIBREDETALLE = '';
-      $CALIBREDETALLE = $keyDetalle;
+      $CALIBREDETALLE = $ARRAYDCARGAAGRUPADO[$keyDetalle]['TCALIBRE'] ?? $keyDetalle;
       $IDCALIBREDETALLE = $ARRAYDCARGAAGRUPADO[$keyDetalle]['ID_TCALIBRE']
         ?? ($ARRAYPRECIOPORCALIBRE[$keyDetalle]['ID_TCALIBRE'] ?? null);
 
-      $ENVASEAGRUPADO = normalizeNumber($ARRAYENVASEAGRUPADO[$keyDetalle] ?? ($ARRAYDCARGAAGRUPADO[$keyDetalle]['ENVASESF'] ?? 0));
-      $NETOAGRUPADO = normalizeNumber($ARRAYNETKILO[$keyDetalle] ?? ($ARRAYDCARGAAGRUPADO[$keyDetalle]['NETOSF'] ?? 0));
-      $BRUTOAGRUPADO = normalizeNumber($ARRAYGROSSKILO[$keyDetalle] ?? ($ARRAYDCARGAAGRUPADO[$keyDetalle]['BRUTOSF'] ?? 0));
+      $ENVASEAGRUPADO = normalizeNumber($ARRAYDCARGAAGRUPADO[$keyDetalle]['ENVASESF'] ?? 0);
+      $NETOAGRUPADO = normalizeNumber($ARRAYDCARGAAGRUPADO[$keyDetalle]['NETOSF'] ?? 0);
+      $BRUTOAGRUPADO = normalizeNumber($ARRAYDCARGAAGRUPADO[$keyDetalle]['BRUTOSF'] ?? 0);
 
       $PRECIOAGRUPADO = normalizeNumber(
         $ARRAYDCARGAAGRUPADO[$keyDetalle]['US']
