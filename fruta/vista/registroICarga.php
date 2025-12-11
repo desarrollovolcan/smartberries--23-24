@@ -5832,10 +5832,11 @@ if (isset($_POST)) {
             //OPERACIONES
             $PAIS_DESTINO_FORM = $_REQUEST['PAIS']
                 ?? ($_REQUEST['PAIS_EMBARQUE'] ?? ($_REQUEST['PAIS_PUERTO'] ?? ($_REQUEST['PAISE'] ?? $PAIS ?? null)));
-            $PAIS_DESTINO_FINAL_FORM = $_REQUEST['DFINAL'] ?? ($_REQUEST['PAIS_FINAL'] ?? null);
+            $PAIS_DESTINO_FINAL_FORM = $_REQUEST['DFINAL'] ?? ($_REQUEST['PAIS_FINAL'] ?? ($_REQUEST['DFINALE'] ?? null));
             if ($PAIS_DESTINO_FINAL_FORM === '') {
                 $PAIS_DESTINO_FINAL_FORM = null;
             }
+            $LCARGA_FORM = $_REQUEST['LCARGA'] ?? ($_REQUEST['LCARGAE'] ?? null);
             //OPERACION DE REGISTRO DE FILA
             if (isset($_REQUEST['CREAR'])) {
 
@@ -5881,7 +5882,7 @@ if (isset($_POST)) {
                 $ICARGA->__SET('ID_AADUANA', $_REQUEST['AADUANA']);
                 $ICARGA->__SET('ID_AGCARGA', $_REQUEST['AGCARGA']);
                 $ICARGA->__SET('ID_DFINAL', $PAIS_DESTINO_FINAL_FORM);
-                $ICARGA->__SET('ID_LCARGA', $_REQUEST['LCARGA']);
+                $ICARGA->__SET('ID_LCARGA', $LCARGA_FORM);
                 $ICARGA->__SET('ID_FPAGO', $_REQUEST['FPAGO']);
                 $ICARGA->__SET('ID_CVENTA', $_REQUEST['CVENTA']);
                 $ICARGA->__SET('ID_MVENTA', $_REQUEST['MVENTA']);
@@ -5893,7 +5894,7 @@ if (isset($_POST)) {
                     if ($_REQUEST['TEMBARQUE'] == "1") {
                         $ICARGA->__SET('ID_TRANSPORTE', $_REQUEST['TRANSPORTE']);
                         $ICARGA->__SET('CRT_ICARGA', $_REQUEST['CRT']);
-                        $ICARGA->__SET('ID_LCARGA', $_REQUEST['LCARGA']);
+                        $ICARGA->__SET('ID_LCARGA', $LCARGA_FORM);
                         $ICARGA->__SET('ID_LDESTINO', $_REQUEST['LDESTINO']);
                     }
                     if ($_REQUEST['TEMBARQUE'] == "2") {
@@ -5994,7 +5995,7 @@ if (isset($_POST)) {
                 $ICARGA->__SET('ID_AADUANA', $_REQUEST['AADUANA']);
                 $ICARGA->__SET('ID_AGCARGA', $_REQUEST['AGCARGA']);
                 $ICARGA->__SET('ID_DFINAL', $PAIS_DESTINO_FINAL_FORM);
-                $ICARGA->__SET('ID_LCARGA', $_REQUEST['LCARGA']);
+                $ICARGA->__SET('ID_LCARGA', $LCARGA_FORM);
                 $ICARGA->__SET('ID_FPAGO', $_REQUEST['FPAGO']);
                 $ICARGA->__SET('ID_CVENTA', $_REQUEST['CVENTA']);
                 $ICARGA->__SET('ID_MVENTA', $_REQUEST['MVENTA']);
@@ -6006,7 +6007,7 @@ if (isset($_POST)) {
                     if ($_REQUEST['TEMBARQUE'] == "1") {
                         $ICARGA->__SET('ID_TRANSPORTE', $_REQUEST['TRANSPORTE']);
                         $ICARGA->__SET('CRT_ICARGA', $_REQUEST['CRT']);
-                        $ICARGA->__SET('ID_LCARGA', $_REQUEST['LCARGA']);
+                        $ICARGA->__SET('ID_LCARGA', $LCARGA_FORM);
                         $ICARGA->__SET('ID_LDESTINO', $_REQUEST['LDESTINO']);
                     }
                     if ($_REQUEST['TEMBARQUE'] == "2") {
@@ -6104,7 +6105,7 @@ if (isset($_POST)) {
                 $ICARGA->__SET('ID_AADUANA', $_REQUEST['AADUANA'] ?? null);
                 $ICARGA->__SET('ID_AGCARGA', $_REQUEST['AGCARGA'] ?? null);
                 $ICARGA->__SET('ID_DFINAL', $PAIS_DESTINO_FINAL_FORM);
-                $ICARGA->__SET('ID_LCARGA', $_REQUEST['LCARGA'] ?? null);
+                $ICARGA->__SET('ID_LCARGA', $LCARGA_FORM);
 
                 if (isset($_REQUEST['TEMBARQUE'])) {
                     if ($_REQUEST['TEMBARQUE'] == "1") {
@@ -6156,38 +6157,20 @@ if (isset($_POST)) {
 
                 $AUSUARIO_ADO->agregarAusuario2($NUMEROVER,1,2,"".$_SESSION["NOMBRE_USUARIO"].", Modificación de Instructivo Carga","fruta_icarga",$_REQUEST['IDP'],$_SESSION["ID_USUARIO"],$_SESSION['ID_EMPRESA'],$_SESSION['ID_PLANTA'],$_SESSION['ID_TEMPORADA'] );
                 
-                if ($accion_dato == "crear") {
-                    $id_dato = $_REQUEST['IDP'];
-                    $accion_dato = "crear";
-                    echo '<script>
-                        Swal.fire({
-                            icon:"info",
-                            title:"Registro Modificado",
-                            text:"El registro de Instructivo se ha modificada correctamente",
-                            showConfirmButton: true,
-                            confirmButtonText:"Cerrar",
-                            closeOnConfirm:false
-                        }).then((result)=>{
-                            location.href = "registroICarga.php?op&id='.$id_dato.'&a='.$accion_dato.'";                        
-                        })
-                    </script>';
-                }
-                if ($accion_dato == "editar") {
-                    $id_dato = $_REQUEST['IDP'];
-                    $accion_dato = "editar";
-                    echo '<script>
-                        Swal.fire({
-                            icon:"info",
-                            title:"Registro Modificado",
-                            text:"El registro de Instructivo se ha modificada correctamente",
-                            showConfirmButton: true,
-                            confirmButtonText:"Cerrar",
-                            closeOnConfirm:false
-                        }).then((result)=>{
-                            location.href = "registroICarga.php?op&id='.$id_dato.'&a='.$accion_dato.'";                        
-                        })
-                    </script>';
-                }
+                $id_dato = $_REQUEST['IDP'];
+                $accion_dato = $_REQUEST['a'] ?? $accion_dato ?? 'editar';
+                echo '<script>
+                    Swal.fire({
+                        icon:"success",
+                        title:"Registro Actualizado",
+                        text:"El registro de Instructivo se ha actualizado correctamente",
+                        showConfirmButton: true,
+                        confirmButtonText:"Cerrar",
+                        closeOnConfirm:false
+                    }).then((result)=>{
+                        location.href = "registroICarga.php?op&id='.$id_dato.'&a='.$accion_dato.'";
+                    })
+                </script>';
             }
             if (isset($_REQUEST['CERRAR'])) {
                 if ($_REQUEST['IDP']) {
@@ -6250,7 +6233,7 @@ if (isset($_POST)) {
                     $ICARGA->__SET('ID_AADUANA', $_REQUEST['AADUANA'] ?? null);
                     $ICARGA->__SET('ID_AGCARGA', $_REQUEST['AGCARGA'] ?? null);
                     $ICARGA->__SET('ID_DFINAL', $PAIS_DESTINO_FINAL_FORM);
-                    $ICARGA->__SET('ID_LCARGA', $_REQUEST['LCARGA'] ?? null);
+                    $ICARGA->__SET('ID_LCARGA', $LCARGA_FORM);
                     if (isset($_REQUEST['TEMBARQUE'])) {
                         if ($_REQUEST['TEMBARQUE'] == "1") {
                             $ICARGA->__SET('ID_TRANSPORTE', $_REQUEST['TRANSPORTE']);
