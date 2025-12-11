@@ -5832,11 +5832,19 @@ if (isset($_POST)) {
             //OPERACIONES
             $PAIS_DESTINO_FORM = $_REQUEST['PAIS']
                 ?? ($_REQUEST['PAIS_EMBARQUE'] ?? ($_REQUEST['PAIS_PUERTO'] ?? ($_REQUEST['PAISE'] ?? $PAIS ?? null)));
+            if ($PAIS_DESTINO_FORM === '') {
+                $PAIS_DESTINO_FORM = null;
+            }
+
             $PAIS_DESTINO_FINAL_FORM = $_REQUEST['DFINAL'] ?? ($_REQUEST['PAIS_FINAL'] ?? ($_REQUEST['DFINALE'] ?? null));
             if ($PAIS_DESTINO_FINAL_FORM === '') {
                 $PAIS_DESTINO_FINAL_FORM = null;
             }
+
             $LCARGA_FORM = $_REQUEST['LCARGA'] ?? ($_REQUEST['LCARGAE'] ?? null);
+            if ($LCARGA_FORM === '') {
+                $LCARGA_FORM = null;
+            }
             //OPERACION DE REGISTRO DE FILA
             if (isset($_REQUEST['CREAR'])) {
 
