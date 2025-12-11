@@ -602,6 +602,7 @@ $html = '
         <th class="color center ">Calibres </th>
         <th class="color center ">Envases </th>
         <th class="color center ">Kilos Neto </th>
+        <th class="color center ">Kilos Bruto </th>
         <th class="color center ">N° InsFinal </th>
         <th class="color center ">Nombre Exportadora </th>
         <th class="color center ">Recibiddor</th>
@@ -721,9 +722,10 @@ $html = $html . '
                 <td class=" center ">' . $NOMBRETCALIBRE . ' </td>
                 <td class=" center">' . $r['ENVASE'] . '</td>
                 <td class=" center">' . $r['NETO'] . '</td>
+                <td class=" center">' . $r['BRUTO'] . '</td>
                 <td class=" center ">' . $NUMEROIREFERENCIA . ' </td>
                 <td class=" center ">' . $NOMBREEXPPORTADORA . ' </td>
-                <td class=" center ">' . $NOMBRERFINAL . ' </td>  
+                <td class=" center ">' . $NOMBRERFINAL . ' </td>
 
                 ';
 
