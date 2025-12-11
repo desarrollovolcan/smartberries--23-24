@@ -882,6 +882,9 @@ if (isset($id_dato) && isset($accion_dato)) {
             $PAIS_DESTINO_AUTOMATICO = $_REQUEST['PAIS']
                 ?? ($_REQUEST['PAIS_EMBARQUE'] ?? ($_REQUEST['PAIS_PUERTO'] ?? ($_REQUEST['PAISE'] ?? $PAIS ?? null)));
             $PAIS_DESTINO_FINAL_AUTOMATICO = $_REQUEST['PAIS_FINAL'] ?? ($PAIS_FINAL ?? null);
+            if ($PAIS_DESTINO_FINAL_AUTOMATICO === '') {
+                $PAIS_DESTINO_FINAL_AUTOMATICO = null;
+            }
 
             $ICARGA->__SET('ID_AGCARGA', $AGCARGA);
             $ICARGA->__SET('ID_DFINAL', $PAIS_DESTINO_FINAL_AUTOMATICO);
@@ -5829,6 +5832,9 @@ if (isset($_POST)) {
             $PAIS_DESTINO_FORM = $_REQUEST['PAIS']
                 ?? ($_REQUEST['PAIS_EMBARQUE'] ?? ($_REQUEST['PAIS_PUERTO'] ?? ($_REQUEST['PAISE'] ?? $PAIS ?? null)));
             $PAIS_DESTINO_FINAL_FORM = $_REQUEST['PAIS_FINAL'] ?? ($PAIS_FINAL ?? null);
+            if ($PAIS_DESTINO_FINAL_FORM === '') {
+                $PAIS_DESTINO_FINAL_FORM = null;
+            }
             //OPERACION DE REGISTRO DE FILA
             if (isset($_REQUEST['CREAR'])) {
 
