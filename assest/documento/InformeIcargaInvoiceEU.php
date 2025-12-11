@@ -909,10 +909,16 @@ $html = $html . '
           ';
           foreach ($ARRAYDETALLEAGRUPADO as $keyDetalle => $s) :
 
-            $PRECIOPORCALIBRE = $ARRAYPRECIOPORCALIBREID[$s['ID_TCALIBRE']]['US']
-              ?? ($ARRAYPRECIOPORCALIBRESOLO[$s['TCALIBRE']]['US'] ?? $s['US']);
-            $MONEDAPORCALIBRE = $ARRAYPRECIOPORCALIBREID[$s['ID_TCALIBRE']]['TMONEDA']
-              ?? ($ARRAYPRECIOPORCALIBRESOLO[$s['TCALIBRE']]['TMONEDA'] ?? $s['TMONEDA']);
+            $PRECIOPORCALIBRE = normalizeNumber(
+              $s['US']
+                ?? ($ARRAYPRECIOPORCALIBRE[$keyDetalle]['US'] ?? null)
+                ?? ($ARRAYPRECIOPORCALIBREID[$s['ID_TCALIBRE']]['US'] ?? null)
+                ?? ($ARRAYPRECIOPORCALIBRESOLO[$s['TCALIBRE']]['US'] ?? 0)
+            );
+            $MONEDAPORCALIBRE = $s['TMONEDA']
+              ?? ($ARRAYPRECIOPORCALIBRE[$keyDetalle]['TMONEDA'] ?? null)
+              ?? ($ARRAYPRECIOPORCALIBREID[$s['ID_TCALIBRE']]['TMONEDA'] ?? null)
+              ?? ($ARRAYPRECIOPORCALIBRESOLO[$s['TCALIBRE']]['TMONEDA'] ?? '');
             $TOTALPORCALIBRE = $PRECIOPORCALIBRE * $s['ENVASESF'];
 
             $html = $html . '
