@@ -546,7 +546,7 @@ include_once "../../assest/config/datosUrLP.php";
                                                             <tr class="text-center">
                                                                 <td> <?php echo $r['NUMERO_ICARGA']; ?>  </td>
                                                                 <td> <?php echo $r['NREFERENCIA_ICARGA']; ?>  </td>
-                                                                <td> <?php echo $r['BLAWB']; ?> </td>
+                                                                <td> <?php echo $r['CRT_ICARGA']; ?> </td>
                                                                 <td> <?php echo $CODIGOESTANDAR; ?></td>
                                                                 <td> <?php echo $NOMBREESTANTAR ?></td>
                                                                 <td> <?php echo number_format($NETOESTANTAR, 2, ".", "") ?></td>
@@ -579,7 +579,7 @@ include_once "../../assest/config/datosUrLP.php";
                                                                 <td> <?php echo $r['FECHAETA']; ?> </td>
                                                                 <td> <?php echo $r['FECHAETAREAL']; ?> </td>
                                                                 <td> <?php echo $NOMBRETCONTENEDOR; ?> </td>
-                                                                <td> <?php echo $r['BLAWB']; ?> </td>
+                                                                <td> <?php echo $r['CRT_ICARGA']; ?> </td>
                                                                 <td> <?php echo $NUMEROCONTENEDOR; ?> </td>
                                                                 <td> <?php echo $r['ESTIMADO']; ?> </td>
                                                                 <td> <?php echo $r['REAL']; ?> </td>
