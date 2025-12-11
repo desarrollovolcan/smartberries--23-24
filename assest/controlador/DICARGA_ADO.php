@@ -395,6 +395,7 @@ class DICARGA_ADO
                                                          FROM fruta_tmoneda
                                                          WHERE ID_TMONEDA=detalle.ID_TMONEDA     
                                                          LIMIT 1) AS 'TMONEDA',                                                    
+                                                        calibre.ID_TCALIBRE AS 'ID_TCALIBRE',
                                                         (
                                                             SELECT calibre2.NOMBRE_TCALIBRE
                                                             FROM fruta_tcalibre calibre2
@@ -627,6 +628,7 @@ class DICARGA_ADO
                                                           AND detalle.ESTADO_REGISTRO = 1
                                                             LIMIT 1
                                                         ) AS 'TMONEDA',
+                                                    calibre.ID_TCALIBRE AS 'ID_TCALIBRE',
                                                     (
                                                         SELECT calibre2.NOMBRE_TCALIBRE
                                                         FROM fruta_tcalibre calibre2
