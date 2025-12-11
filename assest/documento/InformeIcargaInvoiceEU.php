@@ -899,12 +899,11 @@ $html = $html . '
         <table border="0" cellspacing="0" cellpadding="0">
           <thead>
             <tr>
-              <th colspan="9" class="center">DETAIL.</th>
+              <th colspan="8" class="center">DETAIL.</th>
             </tr>
             <tr>
               <th class="color center ">Quantity Boxes</th>
               <th class="color center ">Description of goods </th>
-              <th class="color center ">Handling </th>
               <th class="color center ">Type of Caliber </th>
               <th class="color center ">Net Kilo </th>
               <th class="color center ">Gross Kilo </th>
@@ -934,7 +933,6 @@ $html = $html . '
               <tr class="">
                     <td class="center">'.number_format($s['ENVASESF'], 2, ",", ".").'</td>
                     <td class="center">'.$s['NOMBRE'].'</td>
-                    <td class="center">'.$s['TMANEJO'].'</td>
                     <td class="center" style="text-transform: uppercase;">'.$s['TCALIBRE'].'</td>
                     <td class="center">'.number_format($s['NETOSF'], 2, ",", ".").'</td>
                     <td class="center">'.number_format($s['BRUTOSF'], 2, ",", ".").'</td>
@@ -955,12 +953,11 @@ if($COSTOFLETEICARGA!=""){
             $html = $html . '
               <tr class="">
                     <td class="center"> - </td>
+                    <td class="center"> - </td>
                     <td class="center">Freight cost </td>
                     <td class="center"> - </td>
                     <td class="center"> - </td>
-                    <td class="center"> - </td>
-                    <td class="center"> - </td>
-                    <td class="center"> - </td>
+                    <td class="center"></td>
                     <td class="center"> - </td>
                     <td class="center">'.number_format($COSTOFLETEICARGA, 2, ",", ".").'</td>
               </tr>
@@ -977,11 +974,10 @@ if($COSTOFLETEICARGA!=""){
 
                         <tr class="bt">
                           <th class="color center">'.number_format($TOTALENVASEV, 2, ",", ".").'</th>
-                          <th class="color right">Overall Kilogram </td>
+                          <th class="color center">Totals</th>
                           <td class="color center">&nbsp;</td>
                           <th class="color center">'.number_format($TOTALNETOV, 2, ",", ".").'</th>
                           <th class="color center">'.number_format($TOTALBRUTOV, 2, ",", ".").'</th>
-                          <td class="color center">&nbsp;</td>
                           <td class="color center">&nbsp;</td>
                           <td class="color center">&nbsp;</td>
                           <th class="color center">'.number_format($TOTALUSV, 2, ",", ".").'</th>
