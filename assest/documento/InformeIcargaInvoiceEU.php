@@ -888,7 +888,7 @@ $html = $html . '
         <table border="0" cellspacing="0" cellpadding="0">
           <thead>
             <tr>
-              <th colspan="8" class="center">DETAIL.</th>
+              <th colspan="9" class="center">DETAIL.</th>
             </tr>
             <tr>
               <th class="color center ">Quantity Boxes</th>
@@ -940,8 +940,10 @@ if($COSTOFLETEICARGA!=""){
                     <td class="center">Freight cost </td>
                     <td class="center"> - </td>
                     <td class="center"> - </td>
-                    <td class="center"></td>
                     <td class="center"> - </td>
+                    <td class="center"> - </td>
+                    <td class="center"> - </td>
+                    <td class="center">'.number_format($COSTOFLETEICARGA, 2, ",", ".").'</td>
                     <td class="center">'.number_format($COSTOFLETEICARGA, 2, ",", ".").'</td>
               </tr>
             ';
