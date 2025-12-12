@@ -330,6 +330,7 @@ if($ARRAYICARGA){
       $CACHETMANEJO = [];
       $CACHETCALIBRE = [];
       $CACHETMONEDA = [];
+      $CACHETMONEDANOMBRE = [];
       foreach($ARRAYDICARGADETALLE as $d){
         $NOMBRECOMERCIALDET = '';
         $NOMBRETMANEODET = '';
@@ -394,13 +395,24 @@ if($ARRAYICARGA){
 
     if($ARRAYDCARGA){
     foreach ($ARRAYDCARGA as $s) {
+      $TMONEDANOMBRE = $s['TMONEDA'];
+      if($TMONEDANOMBRE !== '' && is_numeric($TMONEDANOMBRE)){
+        if(!isset($CACHETMONEDANOMBRE[$TMONEDANOMBRE])){
+          $CACHETMONEDANOMBRE[$TMONEDANOMBRE] = $TMONEDA_ADO->verTmoneda($TMONEDANOMBRE);
+        }
+        $ARRAYTMONEDANOMBRE = $CACHETMONEDANOMBRE[$TMONEDANOMBRE];
+        if($ARRAYTMONEDANOMBRE){
+          $TMONEDANOMBRE = $ARRAYTMONEDANOMBRE[0]['NOMBRE_TMONEDA'];
+        }
+      }
+
       $KEYDETALLE = $s['NOMBRE'].'|'.$s['TMANEJO'].'|'.$s['TCALIBRE'];
       if(!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE])){
         $ARRAYDCARGAAGRUPADO[$KEYDETALLE] = [
           'NOMBRE' => $s['NOMBRE'],
           'TMANEJO' => $s['TMANEJO'],
           'TCALIBRE' => $s['TCALIBRE'],
-          'TMONEDA' => $s['TMONEDA'],
+          'TMONEDA' => $TMONEDANOMBRE,
           'US' => $s['US'],
           'ENVASESF' => 0,
           'NETOSF' => 0,
@@ -408,8 +420,8 @@ if($ARRAYICARGA){
           'TOTALUSSF' => 0,
         ];
       }
-      if((!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA']) || $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA'] === '') && $s['TMONEDA'] !== ''){
-        $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA'] = $s['TMONEDA'];
+      if((!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA']) || $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA'] === '') && $TMONEDANOMBRE !== ''){
+        $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA'] = $TMONEDANOMBRE;
       }
       if((!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US']) || $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US'] === '') && ($s['US'] !== '' || isset($s['USSF']))){
         $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US'] = $s['US'] !== '' ? $s['US'] : ($s['USSF'] ?? '');
@@ -975,6 +987,28 @@ $html = $html . '
                 }
                 if($PRECIOUS === ''){
                   $PRECIOUS = $ARRAYPRECIOSTMONEDA[$KEYDETALLEUSO]['US'];
+                }
+              }
+            }
+
+            if($NOMBRETMONEDA === '' || $PRECIOUS === ''){
+              foreach ($ARRAYPRECIOSTMONEDA as $keyPrecio => $precioDato) {
+                $partesPrecio = explode('|', $keyPrecio);
+                if(($partesPrecio[0] ?? '') !== $NOMBREECOMERCIAL){
+                  continue;
+                }
+                $coincideManejo = $NOMBRETMANEJO === '' || ($partesPrecio[1] ?? '') === $NOMBRETMANEJO;
+                $coincideCalibre = $NOMBRETCALIBRE === '' || ($partesPrecio[2] ?? '') === $NOMBRETCALIBRE;
+                if($coincideManejo && $coincideCalibre){
+                  if($NOMBRETMONEDA === '' && $precioDato['TMONEDA'] !== ''){
+                    $NOMBRETMONEDA = $precioDato['TMONEDA'];
+                  }
+                  if($PRECIOUS === '' && $precioDato['US'] !== ''){
+                    $PRECIOUS = $precioDato['US'];
+                  }
+                  if($NOMBRETMONEDA !== '' && $PRECIOUS !== ''){
+                    break;
+                  }
                 }
               }
             }
