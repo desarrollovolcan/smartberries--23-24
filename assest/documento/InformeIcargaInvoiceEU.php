@@ -337,6 +337,12 @@ if($ARRAYICARGA){
           'TOTALUSSF' => 0,
         ];
       }
+      if((!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA']) || $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA'] === '') && $s['TMONEDA'] !== ''){
+        $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA'] = $s['TMONEDA'];
+      }
+      if((!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US']) || $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US'] === '') && ($s['US'] !== '' || isset($s['USSF']))){
+        $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US'] = $s['US'] !== '' ? $s['US'] : ($s['USSF'] ?? '');
+      }
       $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['ENVASESF'] += $s['ENVASESF'];
       $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['NETOSF'] += $s['NETOSF'];
       $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['BRUTOSF'] += $s['BRUTOSF'];
