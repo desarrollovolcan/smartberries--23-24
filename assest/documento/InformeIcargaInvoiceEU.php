@@ -205,9 +205,9 @@ function removeCaliberFromName($name, $caliber) {
   $caliberPattern = preg_quote($caliber, '/');
   $patterns = [
     '/\(\s*' . $caliberPattern . '\s*\)/i',
-    '/\bcalibre\s*' . $caliberPattern . '\b/i',
-    '/\bcaliber\s*' . $caliberPattern . '\b/i',
-    '/\b' . $caliberPattern . '\b/i',
+    '/\bcalibre\s*:?' . '\s*' . $caliberPattern . '\b/i',
+    '/\bcaliber\s*:?' . '\s*' . $caliberPattern . '\b/i',
+    '/(?:^|\s)[\(\[]?\s*' . $caliberPattern . '\s*[\)\]]?(?=\s|$)/i',
   ];
 
   $cleanName = preg_replace($patterns, '', $name);
