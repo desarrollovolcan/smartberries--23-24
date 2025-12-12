@@ -198,6 +198,7 @@ function normalizeNumber($value) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 function removeCaliberFromName($name, $caliber) {
   if (!$name || !$caliber) {
     return $name;
@@ -227,6 +228,8 @@ function removeCaliberFromName($name, $caliber) {
   return trim(preg_replace('/\s+/', ' ', $cleanName));
 }
 
+=======
+>>>>>>> parent of 4bb62b3 (Improve caliber stripping in EU invoice report)
 =======
 >>>>>>> parent of 4bb62b3 (Improve caliber stripping in EU invoice report)
 //INICIALIZAR ARREGLOS
