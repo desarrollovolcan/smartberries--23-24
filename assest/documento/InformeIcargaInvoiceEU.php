@@ -374,7 +374,7 @@ if($ARRAYICARGA){
       $IDTCALIBRE = $s['ID_TCALIBRE'] ?? null;
       if(!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE])){
       $ARRAYDCARGAAGRUPADO[$KEYDETALLE] = [
-        'NOMBRE' => $s['NOMBRE'],
+        'NOMBRE' => removeCaliberFromName($s['NOMBRE'], $s['TCALIBRE']) ?: $s['NOMBRE'],
         'TCALIBRE' => $s['TCALIBRE'],
         'ID_TCALIBRE' => $IDTCALIBRE,
         'TMONEDA' => $s['TMONEDA'],
