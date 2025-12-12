@@ -856,18 +856,38 @@ $html = $html . '
               $NOMBRETCALIBRE = $DETALLEPARTS[2];
             }
 
-            $NETOAGRUPADO = $s['NETOSF'];
-            $BRUTOAGRUPADO = $s['BRUTOSF'];
-            if(isset($ARRAYNETKILO[$keyDetalle])){
-              $NETOAGRUPADO = $ARRAYNETKILO[$keyDetalle];
-              if(isset($ARRAYENVASEAGRUPADO[$keyDetalle]) && $ARRAYENVASEAGRUPADO[$keyDetalle] > 0){
-                $NETOAGRUPADO = ($ARRAYNETKILO[$keyDetalle] / $ARRAYENVASEAGRUPADO[$keyDetalle]) * $s['ENVASESF'];
+            $KEYDETALLEUSO = $keyDetalle;
+            if(($NOMBRETMANEJO === '' || $NOMBRETCALIBRE === '') && is_array($ARRAYNETKILO) && count($ARRAYNETKILO) > 0){
+              foreach (array_keys($ARRAYNETKILO) as $keyAgrupado) {
+                $PARTESAGRUPADO = explode('|', $keyAgrupado);
+                if(($PARTESAGRUPADO[0] ?? '') === $NOMBREECOMERCIAL){
+                  $COINCIDECALIBRE = $NOMBRETCALIBRE === '' || ($PARTESAGRUPADO[2] ?? '') === $NOMBRETCALIBRE;
+                  if($COINCIDECALIBRE){
+                    $KEYDETALLEUSO = $keyAgrupado;
+                    if($NOMBRETMANEJO === '' && isset($PARTESAGRUPADO[1])){
+                      $NOMBRETMANEJO = $PARTESAGRUPADO[1];
+                    }
+                    if($NOMBRETCALIBRE === '' && isset($PARTESAGRUPADO[2])){
+                      $NOMBRETCALIBRE = $PARTESAGRUPADO[2];
+                    }
+                    break;
+                  }
+                }
               }
             }
-            if(isset($ARRAYGROSSKILO[$keyDetalle])){
-              $BRUTOAGRUPADO = $ARRAYGROSSKILO[$keyDetalle];
-              if(isset($ARRAYENVASEAGRUPADO[$keyDetalle]) && $ARRAYENVASEAGRUPADO[$keyDetalle] > 0){
-                $BRUTOAGRUPADO = ($ARRAYGROSSKILO[$keyDetalle] / $ARRAYENVASEAGRUPADO[$keyDetalle]) * $s['ENVASESF'];
+
+            $NETOAGRUPADO = $s['NETOSF'];
+            $BRUTOAGRUPADO = $s['BRUTOSF'];
+            if(isset($ARRAYNETKILO[$KEYDETALLEUSO])){
+              $NETOAGRUPADO = $ARRAYNETKILO[$KEYDETALLEUSO];
+              if(isset($ARRAYENVASEAGRUPADO[$KEYDETALLEUSO]) && $ARRAYENVASEAGRUPADO[$KEYDETALLEUSO] > 0){
+                $NETOAGRUPADO = ($ARRAYNETKILO[$KEYDETALLEUSO] / $ARRAYENVASEAGRUPADO[$KEYDETALLEUSO]) * $s['ENVASESF'];
+              }
+            }
+            if(isset($ARRAYGROSSKILO[$KEYDETALLEUSO])){
+              $BRUTOAGRUPADO = $ARRAYGROSSKILO[$KEYDETALLEUSO];
+              if(isset($ARRAYENVASEAGRUPADO[$KEYDETALLEUSO]) && $ARRAYENVASEAGRUPADO[$KEYDETALLEUSO] > 0){
+                $BRUTOAGRUPADO = ($ARRAYGROSSKILO[$KEYDETALLEUSO] / $ARRAYENVASEAGRUPADO[$KEYDETALLEUSO]) * $s['ENVASESF'];
               }
             }
 
