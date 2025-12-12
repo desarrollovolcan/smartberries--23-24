@@ -203,12 +203,24 @@ function removeCaliberFromName($name, $caliber) {
   }
 
   $caliberPattern = preg_quote($caliber, '/');
+  $caliberCompact = preg_quote(preg_replace('/[^a-z0-9]/i', '', $caliber), '/');
   $patterns = [
     '/\(\s*' . $caliberPattern . '\s*\)/i',
-    '/\bcalibre\s*:?' . '\s*' . $caliberPattern . '\b/i',
-    '/\bcaliber\s*:?' . '\s*' . $caliberPattern . '\b/i',
-    '/(?:^|\s)[\(\[]?\s*' . $caliberPattern . '\s*[\)\]]?(?=\s|$)/i',
+    '/\[\s*' . $caliberPattern . '\s*\]/i',
+    '/\b(?:calibre|caliber|size|cl)\s*:?' . '\s*' . $caliberPattern . '\b/i',
+    '/(?:^|\s|-)\s*' . $caliberPattern . '(?=\s|$)/i',
+    '/(?:^|\s|-)\s*' . $caliberPattern . '\b/i',
   ];
+
+  if ($caliberCompact && $caliberCompact !== $caliberPattern) {
+    $patterns = array_merge($patterns, [
+      '/\(\s*' . $caliberCompact . '\s*\)/i',
+      '/\[\s*' . $caliberCompact . '\s*\]/i',
+      '/\b(?:calibre|caliber|size|cl)\s*:?' . '\s*' . $caliberCompact . '\b/i',
+      '/(?:^|\s|-)\s*' . $caliberCompact . '(?=\s|$)/i',
+      '/(?:^|\s|-)\s*' . $caliberCompact . '\b/i',
+    ]);
+  }
 
   $cleanName = preg_replace($patterns, '', $name);
   return trim(preg_replace('/\s+/', ' ', $cleanName));
