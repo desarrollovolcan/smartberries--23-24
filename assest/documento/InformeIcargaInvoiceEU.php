@@ -844,6 +844,18 @@ $html = $html . '
            <tbody>
           ';
           foreach ($ARRAYDCARGAAGRUPADO as $keyDetalle => $s) :
+            $DETALLEPARTS = explode('|', $keyDetalle);
+            $NOMBREECOMERCIAL = $s['NOMBRE'] ?? ($DETALLEPARTS[0] ?? '');
+            $NOMBRETMANEJO = $s['TMANEJO'] ?? ($DETALLEPARTS[1] ?? '');
+            $NOMBRETCALIBRE = $s['TCALIBRE'] ?? ($DETALLEPARTS[2] ?? '');
+
+            if($NOMBRETMANEJO === '' && isset($DETALLEPARTS[1])){
+              $NOMBRETMANEJO = $DETALLEPARTS[1];
+            }
+            if($NOMBRETCALIBRE === '' && isset($DETALLEPARTS[2])){
+              $NOMBRETCALIBRE = $DETALLEPARTS[2];
+            }
+
             $NETOAGRUPADO = $s['NETOSF'];
             $BRUTOAGRUPADO = $s['BRUTOSF'];
             if(isset($ARRAYNETKILO[$keyDetalle])){
@@ -863,9 +875,9 @@ $html = $html . '
             $html = $html . '
               <tr class="">
                     <td class="center">'.$s['ENVASESF'].'</td>
-                    <td class="center">'.$s['NOMBRE'].'</td>
-                    <td class="center">'.$s['TMANEJO'].'</td>
-                    <td class="center">'.$s['TCALIBRE'].'</td>
+                    <td class="center">'.$NOMBREECOMERCIAL.'</td>
+                    <td class="center">'.$NOMBRETMANEJO.'</td>
+                    <td class="center">'.$NOMBRETCALIBRE.'</td>
                     <td class="center">'.number_format($NETOAGRUPADO, 2, ",", ".").'</td>
                     <td class="center">'.number_format($BRUTOAGRUPADO, 2, ",", ".").'</td>
                     <td class="center" style="text-transform: uppercase;">'.$s['TMONEDA'].'</td>
