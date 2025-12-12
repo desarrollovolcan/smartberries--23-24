@@ -299,7 +299,7 @@ if($ARRAYICARGA){
           }
           $NOMBRETCALIBRE = "Sin Datos";
           if(isset($r['ID_TCALIBRE'])){
-            $ARRAYTCALIBRE = $TCALIBRE_ADO->verTcalibre($r['ID_TCALIBRE']);
+            $ARRAYTCALIBRE = $TCALIBRE_ADO->verCalibre($r['ID_TCALIBRE']);
             if($ARRAYTCALIBRE){
               $NOMBRETCALIBRE = $ARRAYTCALIBRE[0]['NOMBRE_TCALIBRE'];
             }
@@ -907,14 +907,15 @@ if($COSTOFLETEICARGA!=""){
                     
                         <tr class="bt">
                           <th class="color center">'.number_format($TOTALENVASEV, 2, ",", ".").'</th>
-                          <td class="color center">&nbsp;</td>
-                          <th class="color right">Overall Kilogram </td>
-                          <th class="color center">'.number_format($TOTALNETOV, 2, ",", ".").'</th>
-                          <th class="color center">'.number_format($TOTALBRUTOV, 2, ",", ".").'</th>
-                          <td class="color center">&nbsp;</td>
-                          <td class="color center">&nbsp;</td>
-                          <th class="color center">'.number_format($TOTALUSV, 2, ",", ".").'</th>
-                        </tr>
+                            <th class="color right">Overall Kilogram </td>
+                            <th class="color center">&nbsp;</th>
+                            <th class="color center">&nbsp;</th>
+                            <th class="color center">'.number_format($TOTALNETOV, 2, ",", ".").'</th>
+                            <th class="color center">'.number_format($TOTALBRUTOV, 2, ",", ".").'</th>
+                            <td class="color center">&nbsp;</td>
+                            <td class="color center">&nbsp;</td>
+                            <th class="color center">'.number_format($TOTALUSV, 2, ",", ".").'</th>
+                          </tr>
                     ';
             
             
