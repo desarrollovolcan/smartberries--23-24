@@ -210,6 +210,7 @@ $ARRAYSEGURO = "";
 $ARRAYPRODUCTOR = "";
 $ARRAYDCARGA = "";
 $ARRAYDCARGAAGRUPADO = [];
+$ARRAYPRECIOSTMONEDA = [];
 $ARRAYCALIBRE = "";
 $ARRAYNUMERO = "";
 $ARRAYVERNOTADCNC="";
@@ -321,6 +322,76 @@ if($ARRAYICARGA){
       endforeach;
     }
 
+    // Preload price and currency per instructive detail to recover missing values
+    $ARRAYDICARGADETALLE = $DICARGA_ADO->buscarPorIcarga($IDOP);
+    if($ARRAYDICARGADETALLE){
+      $CACHEESTANDAR = [];
+      $CACHEECOMERCIAL = [];
+      $CACHETMANEJO = [];
+      $CACHETCALIBRE = [];
+      $CACHETMONEDA = [];
+      foreach($ARRAYDICARGADETALLE as $d){
+        $NOMBRECOMERCIALDET = '';
+        $NOMBRETMANEODET = '';
+        $NOMBRETCALIBREDET = '';
+        if(isset($d['ID_ESTANDAR'])){
+          if(!isset($CACHEESTANDAR[$d['ID_ESTANDAR']])){
+            $CACHEESTANDAR[$d['ID_ESTANDAR']] = $EEXPORTACION_ADO->verEstandar($d['ID_ESTANDAR']);
+          }
+          $ARRAYESTANDARDET = $CACHEESTANDAR[$d['ID_ESTANDAR']];
+          if($ARRAYESTANDARDET){
+            $IDECOMERCIALDET = $ARRAYESTANDARDET[0]['ID_ECOMERCIAL'];
+            if(!isset($CACHEECOMERCIAL[$IDECOMERCIALDET])){
+              $CACHEECOMERCIAL[$IDECOMERCIALDET] = $ECOMERCIAL_ADO->verEcomercial($IDECOMERCIALDET);
+            }
+            $ARRAYECOMERCIALDET = $CACHEECOMERCIAL[$IDECOMERCIALDET];
+            if($ARRAYECOMERCIALDET){
+              $NOMBRECOMERCIALDET = $ARRAYECOMERCIALDET[0]['NOMBRE_ECOMERCIAL'];
+            }
+          }
+        }
+        if(isset($d['ID_TMANEJO'])){
+          if(!isset($CACHETMANEJO[$d['ID_TMANEJO']])){
+            $CACHETMANEJO[$d['ID_TMANEJO']] = $TMANEJO_ADO->verTmanejo($d['ID_TMANEJO']);
+          }
+          $ARRAYTMANEJODET = $CACHETMANEJO[$d['ID_TMANEJO']];
+          if($ARRAYTMANEJODET){
+            $NOMBRETMANEODET = $ARRAYTMANEJODET[0]['NOMBRE_TMANEJO'];
+          }
+        }
+        if(isset($d['ID_TCALIBRE'])){
+          if(!isset($CACHETCALIBRE[$d['ID_TCALIBRE']])){
+            $CACHETCALIBRE[$d['ID_TCALIBRE']] = $TCALIBRE_ADO->verCalibre($d['ID_TCALIBRE']);
+          }
+          $ARRAYTCALIBREDET = $CACHETCALIBRE[$d['ID_TCALIBRE']];
+          if($ARRAYTCALIBREDET){
+            $NOMBRETCALIBREDET = $ARRAYTCALIBREDET[0]['NOMBRE_TCALIBRE'];
+          }
+        }
+        $KEYPRECIO = $NOMBRECOMERCIALDET.'|'.$NOMBRETMANEODET.'|'.$NOMBRETCALIBREDET;
+        if(!isset($ARRAYPRECIOSTMONEDA[$KEYPRECIO])){
+          $ARRAYPRECIOSTMONEDA[$KEYPRECIO] = [
+            'TMONEDA' => '',
+            'US' => '',
+          ];
+        }
+        if($ARRAYPRECIOSTMONEDA[$KEYPRECIO]['TMONEDA'] === ''){
+          if(isset($d['ID_TMONEDA'])){
+            if(!isset($CACHETMONEDA[$d['ID_TMONEDA']])){
+              $CACHETMONEDA[$d['ID_TMONEDA']] = $TMONEDA_ADO->verTmoneda($d['ID_TMONEDA']);
+            }
+            $ARRAYTMONEDADET = $CACHETMONEDA[$d['ID_TMONEDA']];
+            if($ARRAYTMONEDADET){
+              $ARRAYPRECIOSTMONEDA[$KEYPRECIO]['TMONEDA'] = $ARRAYTMONEDADET[0]['NOMBRE_TMONEDA'];
+            }
+          }
+        }
+        if($ARRAYPRECIOSTMONEDA[$KEYPRECIO]['US'] === '' && isset($d['PRECIO_US_DICARGA'])){
+          $ARRAYPRECIOSTMONEDA[$KEYPRECIO]['US'] = $d['PRECIO_US_DICARGA'];
+        }
+      }
+    }
+
     if($ARRAYDCARGA){
     foreach ($ARRAYDCARGA as $s) {
       $KEYDETALLE = $s['NOMBRE'].'|'.$s['TMANEJO'].'|'.$s['TCALIBRE'];
@@ -343,6 +414,17 @@ if($ARRAYICARGA){
       if((!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US']) || $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US'] === '') && ($s['US'] !== '' || isset($s['USSF']))){
         $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US'] = $s['US'] !== '' ? $s['US'] : ($s['USSF'] ?? '');
       }
+      if(((!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA']) || $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA'] === '') || ((!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US']) || $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US'] === '')))
+        {
+          if(isset($ARRAYPRECIOSTMONEDA[$KEYDETALLE])){
+            if((!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA']) || $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA'] === '') && $ARRAYPRECIOSTMONEDA[$KEYDETALLE]['TMONEDA'] !== ''){
+              $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['TMONEDA'] = $ARRAYPRECIOSTMONEDA[$KEYDETALLE]['TMONEDA'];
+            }
+            if((!isset($ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US']) || $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US'] === '') && $ARRAYPRECIOSTMONEDA[$KEYDETALLE]['US'] !== ''){
+              $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['US'] = $ARRAYPRECIOSTMONEDA[$KEYDETALLE]['US'];
+            }
+          }
+        }
       $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['ENVASESF'] += $s['ENVASESF'];
       $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['NETOSF'] += $s['NETOSF'];
       $ARRAYDCARGAAGRUPADO[$KEYDETALLE]['BRUTOSF'] += $s['BRUTOSF'];
@@ -884,6 +966,16 @@ $html = $html . '
             $DETALLEAGRUPADOUSO = $ARRAYDCARGAAGRUPADO[$KEYDETALLEUSO] ?? [];
             $NOMBRETMONEDA = $DETALLEAGRUPADOUSO['TMONEDA'] ?? ($s['TMONEDA'] ?? '');
             $PRECIOUS = $DETALLEAGRUPADOUSO['US'] ?? ($s['US'] ?? '');
+            if($NOMBRETMONEDA === '' || $PRECIOUS === ''){
+              if(isset($ARRAYPRECIOSTMONEDA[$KEYDETALLEUSO])){
+                if($NOMBRETMONEDA === ''){
+                  $NOMBRETMONEDA = $ARRAYPRECIOSTMONEDA[$KEYDETALLEUSO]['TMONEDA'];
+                }
+                if($PRECIOUS === ''){
+                  $PRECIOUS = $ARRAYPRECIOSTMONEDA[$KEYDETALLEUSO]['US'];
+                }
+              }
+            }
 
             $NETOAGRUPADO = $s['NETOSF'];
             $BRUTOAGRUPADO = $s['BRUTOSF'];
